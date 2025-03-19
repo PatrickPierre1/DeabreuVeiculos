@@ -1,0 +1,35 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Deabreu Veiculos API",
+        "description": "API documentation for Deabreu Veiculos",
+        "contact": {
+            "email": "patrickpierre2015@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/brands": {
+            "get": {
+                "summary": "List all brands",
+                "operationId": "3c41aa2e65314941e37a634e810c5f73",
+                "responses": {
+                    "200": {
+                        "description": "A list with brands"
+                    }
+                }
+            }
+        },
+        "/api/cars": {
+            "get": {
+                "summary": "List all cars",
+                "operationId": "1fd4f1fdc0da258c5084bcdce4bbe693",
+                "responses": {
+                    "200": {
+                        "description": "A list with cars"
+                    }
+                }
+            }
+        }
+    }
+}

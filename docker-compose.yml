@@ -1,0 +1,68 @@
+services:
+  deabreuapi:
+    build: "./deabreuapi"
+    container_name: DeabreuApi
+    environment:
+      DB_HOST: db
+      DB_DATABASE: deabreu
+      DB_USERNAME: patrick
+      DB_PASSWORD: patrick
+    ports:
+      - 8000:8000
+    volumes:
+      - ./deabreuapi:/app/deabreuapi
+      - /app/deabreuapi/vendor
+    depends_on:
+      - db
+    networks:
+      - app
+
+  deabreupainel:
+    build: "./deabreupainel"
+    container_name: DeabreuPainel
+    tty: true
+    ports:
+      - 3001:3001
+    volumes:
+      - ./deabreupainel:/app/deabreupainel
+      - /app/deabreupainel/node_modules
+    depends_on:
+      - deabreuapi
+    networks:
+      - app
+
+  deabreustore:
+    build: "./deabreustore"
+    container_name: DeabreuStore
+    tty: true
+    ports:
+      - 3000:3000
+    volumes:
+      - ./deabreustore:/app/deabreustore
+      - /app/deabreustore/node_modules
+    depends_on:
+      - deabreuapi
+    networks:
+      - app
+
+  db:
+    image: mysql:8.0
+    container_name: DeabreuDB
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: 'deabreu'
+      MYSQL_USER: 'patrick'
+      MYSQL_PASSWORD: 'patrick'
+      MYSQL_ROOT_PASSWORD: 'root'
+    volumes:
+      - deabreu_mysql:/var/lib/mysql
+    networks:
+      - app
+
+volumes:
+  deabreu_mysql:
+
+networks:
+  app:
+    driver: bridge
